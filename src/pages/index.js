@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { graphql, Link } from "gatsby"
 import gql from "graphql-tag"
 import { useSubscription, useMutation } from "react-apollo-hooks"
@@ -44,8 +44,15 @@ export default function Home() {
   const { data, loading, error } = useSubscription(GET_POSTS, {
     suspend: false,
   })
-  let input
-  const [addPost, { data2 }] = useMutation(ADD_POST)
+  const [addPost] = useMutation(ADD_POST)
+  const [post, setPost] = useState({ title: "", content: "" })
+
+  const handleChange = (e) => {
+    const {name, value} = e.target;
+    const newPost = {...post}
+    newPost[name] = value;
+    setPost(newPost)
+  }
   if (loading === true) {
     return <div>loading</div>
   }
@@ -71,15 +78,13 @@ export default function Home() {
         <form
           onSubmit={e => {
             e.preventDefault()
-            addPost({ variables: { title: input.value, content: "derp" } })
-            input.value = ""
+            addPost({ variables: { title: post.title, content: post.content } })
+            console.log(post)
+            setPost({ title: '', content: ''})
           }}
         >
-          <input
-            ref={node => {
-              input = node
-            }}
-          />
+          <input type="text" name="title" onChange={handleChange} />
+          <input type="text" name="content" onChange={handleChange} />
           <button type="submit">Add Post</button>
         </form>
       </>
