@@ -39,7 +39,6 @@ export default ({ data }) => {
 
   const handleChange = (e) => {
     setComment({content: e.target.value})
-    console.log(comment)
   };
   const post = data.blog.posts_by_pk
   return (
