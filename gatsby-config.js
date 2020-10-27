@@ -12,9 +12,9 @@ module.exports = {
     fieldName: 'blog',
     createLink: () => {
       return createHttpLink({
-        uri: process.env.HASURA_GRAPHQL_ENDPOINT,
+        uri: process.env.GATSBY_HASURA_GRAPHQL_ENDPOINT,
         headers: {
-          'x-hasura-admin-secret' : process.env.HASURA_ADMIN_SECRET
+          'x-hasura-admin-secret' : process.env.GATSBY_HASURA_ADMIN_SECRET
         },
         fetch,
       })
