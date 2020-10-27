@@ -27,10 +27,10 @@ const GET_COMMENTS = gql`
 
 const Comments = ({ id }) => {
   console.log(id)
-  const { data, loading, error } = useSubscription(
-    GET_COMMENTS,
-    { suspend: false, variables: { id }, }
-  )
+  const { data, loading, error } = useSubscription(GET_COMMENTS, {
+    suspend: false,
+    variables: { id },
+  })
 
   if (loading) {
     return <p>Loading</p>
@@ -58,8 +58,6 @@ export default ({ data }) => {
         Written by: {post.author.first_name} {post.author.last_name}
       </p>
       <Comments id={post.id} />
-<form action="">
-  
-  </form>    </div>
+    </div>
   )
 }

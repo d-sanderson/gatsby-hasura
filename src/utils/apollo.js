@@ -26,7 +26,7 @@ const wsClient = new SubscriptionClient(
     reconnect: true,
     connectionParams: () => ({
       headers: {
-        "x-hasura-admin-secret": 'hasurarules!',
+        "x-hasura-admin-secret": process.env.GATSBY_HASURA_ADMIN_SECRET,
       },
     }),
   },
