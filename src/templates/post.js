@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { graphql, Link } from "gatsby"
+import Comments from "../components/Comments"
 import gql from "graphql-tag"
 import { useSubscription, useMutation } from "react-apollo-hooks"
 export const query = graphql`
@@ -13,14 +14,6 @@ export const query = graphql`
           last_name
         }
       }
-    }
-  }
-`
-const GET_COMMENTS = gql`
-  subscription($id: uuid!) {
-    comments(where: { post_id: { _eq: $id } }) {
-      id
-      content
     }
   }
 `
@@ -38,25 +31,7 @@ const ADD_COMMENT = gql`
     }
   }
 `
-const Comments = ({ id }) => {
-  const { data, loading, error } = useSubscription(GET_COMMENTS, {
-    suspend: false,
-    variables: { id },
-  })
-  if (loading) {
-    return <p>Loading</p>
-  }
-  if (error) {
-    return <p>{JSON.stringify(error, null, 2)}</p>
-  }
-  return (
-    <ul>
-      {data.comments.map(comment => (
-        <li key={comment.id}>{comment.content}</li>
-      ))}
-    </ul>
-  )
-}
+
 
 export default ({ data }) => {
   const [addComment] = useMutation(ADD_COMMENT)
